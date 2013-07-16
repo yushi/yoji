@@ -3,6 +3,7 @@ fs = require 'fs'
 html = require '../html'
 contents = require '../contents'
 express = require 'express'
+rst = require('../rst')
 
 fs_path = (root, path)->
   return root + path
@@ -13,6 +14,7 @@ lookup_type = (path)->
   return 'css' if path.match /\.css$/
   return 'png' if path.match /\.png$/
   return 'markdown' if path.match /\.(:?markdown|md)$/
+  return 'rst' if path.match /\.rst$/
   return 'javascript' if path.match /\.js$/
   return
 
@@ -22,6 +24,24 @@ raw_contents = (res, type, data)->
   res.write data
   res.end()
 
+
+deco_contents = (req, res, data)->
+  head = html.tag 'head', contents.include_css
+
+  title = html.tag 'h1', req.url
+  hr = html.tag 'hr'
+
+  body = html.tag 'body', [
+    contents.breadcrumb req.path
+    contents.navbar
+    hr
+    data
+    contents.include_js
+  ].join ''
+  html_str = html.tag 'html', head + body
+  res.setHeader 'Content-Type', 'text/html'
+  res.write html_str
+  res.end()
 
 exports = module.exports = (root)->
   return StaticMiddleware = (req, res, next)->
@@ -47,6 +67,10 @@ exports = module.exports = (root)->
         showdown = require 'showdown'
         conv = new showdown.converter()
         data = conv.makeHtml data.toString()
+      when 'rst'
+        rst.rst_to_html data, (html_data)->
+          deco_contents(req, res, html_data)
+        return
       when 'javascript'
         data = html.escape data
         data = html.tag 'code', data.toString(), {'data-language': 'javascript'}
@@ -54,19 +78,4 @@ exports = module.exports = (root)->
       else
         data = html.tag 'pre', html.escape(data)
 
-    head = html.tag 'head', contents.include_css
-
-    title = html.tag 'h1', req.url
-    hr = html.tag 'hr'
-
-    body = html.tag 'body', [
-      contents.breadcrumb req.path
-      contents.navbar
-      hr
-      data
-      contents.include_js
-    ].join ''
-    html_str = html.tag 'html', head + body
-    res.setHeader 'Content-Type', 'text/html'
-    res.write html_str
-    res.end()
+    deco_contents(req, res, data)
