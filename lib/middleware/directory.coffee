@@ -19,7 +19,7 @@ dir_table_tags = (files, root)->
     else if stat.isDirectory()
       opt.href = "./#{file}/"
     else
-      opt.href = "./#{file}"
+      opt.href = "./#{file}?yoji=preview"
 
     html.tag 'a', file, opt
 
@@ -48,7 +48,7 @@ exports = module.exports = (root)->
     head_str = html.tag 'head', contents.include_css
 
     body_str = html.tag 'body', [
-      contents.breadcrumb req.url
+      contents.breadcrumb req.path
       contents.navbar
       dir_table_tags(files, path)
       contents.include_js

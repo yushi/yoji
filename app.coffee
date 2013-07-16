@@ -19,8 +19,8 @@ app.use(express.methodOverride())
 app.use(app.router)
 static_path = pwd # path.join(__dirname, 'public')
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(require('./lib/middleware/static')(static_path))
 app.use(require('./lib/middleware/directory')(static_path))
+app.use(require('./lib/middleware/static')(static_path))
 #app.use(express.directory(static_path))
 
 
