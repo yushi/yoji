@@ -6,7 +6,7 @@ navbar_tags = ()->
   #  a = html.tag 'a', e, {'href': '#'}
   #  html.tag 'li', a
 
-  nav = html.tag 'a', 'Yoji', {'class': 'brand', 'href': '#'}
+  nav = html.tag 'a', 'Yoji', {'class': 'brand', 'href': '/'}
   nav_input = html.tag 'input',
     '',
     {
