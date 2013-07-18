@@ -49,7 +49,7 @@ exports = module.exports = (root)->
       return next()
 
     if req.query.yoji != 'preview'
-      static_middleware = express.static(root)
+      static_middleware = express.static(root, {hidden: true})
       static_middleware(req, res, next)
       return
 
