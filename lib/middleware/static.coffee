@@ -42,6 +42,7 @@ deco_contents = (req, res, data)->
   res.write html_str
   res.end()
 
+
 exports = module.exports = (root)->
   return StaticMiddleware = (req, res, next)->
     if 'GET' != req.method && 'HEAD' != req.method

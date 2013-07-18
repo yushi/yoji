@@ -1,5 +1,6 @@
 html = require './html'
 
+
 navbar_tags = ()->
   lis = [].map (e)->
     a = html.tag 'a', e, {'href': '#'}
@@ -8,6 +9,7 @@ navbar_tags = ()->
   navbar_inner =html.tag 'div', nav, {'class': 'navbar-inner'}
   navbar = html.tag 'div', navbar_inner, {'class': 'navbar navbar-static-top'}
   return navbar
+
 
 css_tags = ()->
   css_files = [
@@ -30,6 +32,7 @@ js_tags = ()->
     return html.js_tag path
 
   return tags.join ''
+
 
 breadcrumb = (path)->
   path = 'root' + path
@@ -61,6 +64,7 @@ breadcrumb = (path)->
     lis.push html.tag 'li', last
 
   return html.tag 'ul', lis.join(''), {'class': 'breadcrumb'}
+
 
 common_parts = (path)->
   navbar_tags() + breadcrumb(path)
