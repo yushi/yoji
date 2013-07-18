@@ -2,11 +2,26 @@ html = require './html'
 
 
 navbar_tags = ()->
-  lis = [].map (e)->
-    a = html.tag 'a', e, {'href': '#'}
-    html.tag 'li', a
-  nav = html.tag 'ul', lis.join(''), {'class': 'nav'}
-  navbar_inner =html.tag 'div', nav, {'class': 'navbar-inner'}
+  #lis = [].map (e)->
+  #  a = html.tag 'a', e, {'href': '#'}
+  #  html.tag 'li', a
+
+  nav = html.tag 'a', 'Yoji', {'class': 'brand', 'href': '#'}
+  nav_input = html.tag 'input',
+    '',
+    {
+      'class': 'search-query span2'
+      'type': 'text'
+      'placeholder': 'keyword'
+      'name': 'kw'
+    }
+  nav += html.tag 'form',
+    nav_input,
+    {
+      'class': 'navbar-search pull-right'
+    }
+  #nav += html.tag 'ul', lis.join(''), {'class': 'nav'}
+  navbar_inner = html.tag 'div', nav, {'class': 'navbar-inner'}
   navbar = html.tag 'div', navbar_inner, {'class': 'navbar navbar-static-top'}
   return navbar
 
