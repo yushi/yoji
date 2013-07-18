@@ -9,26 +9,44 @@ fs_path = (root, path)->
 
 
 dir_table_tags = (files, root)->
-  file_tags = files.map (file)->
+  file_info = files.map (file)->
     try
       stat = fs.statSync root + file
     catch e
 
-    opt = {}
-    if not stat
-    else if stat.isDirectory()
-      opt.href = "./#{file}/"
+    {
+      'is_dir': stat.isDirectory()
+      'name': file
+    }
+
+  file_tags = file_info.map (f)->
+    if f.is_dir
+      link = html.tag 'a', f.name, {'href': "./#{f.name}/"}
     else
-      opt.href = "./#{file}?yoji=preview"
+      link = html.tag 'a', f.name, {'href': "./#{f.name}?yoji=preview"}
 
-    html.tag 'a', file, opt
+    td1 = html.tag 'td', link
 
-  file_tags = file_tags.map (tag)->
-    td = html.tag 'td', tag
-    html.tag 'tr', td
+    raw_link = ''
+    if not f.is_dir
+      raw_link = html.tag 'a',
+        'raw',
+        {
+          'class': 'btn btn-small'
+          'href': "./#{f.name}"
+        }
 
-  return html.tag('table', file_tags.join(''), {'class': 'table'})
+    td2 = html.tag 'td', raw_link, {'class': 'span1'}
 
+    html.tag 'tr', td1 + td2
+
+  table = html.tag('table',
+    file_tags.join(''),
+    {'class': 'table table-bordered'})
+
+  parts = html.tag('div', table, {'class': 'span12'})
+  parts = html.tag('div', table, {'class': 'container'})
+  return parts
 
 exports = module.exports = (root)->
   return DirectoryMiddleware = (req, res, next)->

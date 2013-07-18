@@ -82,4 +82,6 @@ exports = module.exports = (root)->
       else
         data = html.tag 'pre', html.escape(data)
 
+    data = html.tag('div', data, {'class': 'span12'})
+    data = html.tag('div', data, {'class': 'container'})
     deco_contents(req, res, data)
