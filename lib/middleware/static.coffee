@@ -16,6 +16,7 @@ lookup_type = (path)->
   return 'markdown' if path.match /\.(:?markdown|md)$/
   return 'rst' if path.match /\.rst$/
   return 'javascript' if path.match /\.js$/
+  return 'python' if path.match /\.py$/
   return
 
 
@@ -74,6 +75,10 @@ exports = module.exports = (root)->
       when 'javascript'
         data = html.escape data
         data = html.tag 'code', data.toString(), {'data-language': 'javascript'}
+        data = html.tag 'pre', data
+      when 'python'
+        data = html.escape data
+        data = html.tag 'code', data.toString(), {'data-language': 'python'}
         data = html.tag 'pre', data
       else
         data = html.tag 'pre', html.escape(data)
