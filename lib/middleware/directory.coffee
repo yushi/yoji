@@ -42,7 +42,7 @@ dir_table_tags = (files, root)->
 
   table = html.tag('table',
     file_tags.join(''),
-    {'class': 'table table-bordered'})
+    {'class': 'table table-hover'})
 
   parts = html.tag('div', table, {'class': 'span12'})
   parts = html.tag('div', table, {'class': 'container'})
