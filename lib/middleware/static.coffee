@@ -33,9 +33,7 @@ deco_contents = (req, res, data)->
   hr = html.tag 'hr'
 
   body = html.tag 'body', [
-    contents.breadcrumb req.path
-    contents.navbar
-    hr
+    contents.common_parts req.path
     data
     contents.include_js
   ].join ''

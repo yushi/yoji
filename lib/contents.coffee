@@ -6,7 +6,7 @@ navbar_tags = ()->
     html.tag 'li', a
   nav = html.tag 'ul', lis.join(''), {'class': 'nav'}
   navbar_inner =html.tag 'div', nav, {'class': 'navbar-inner'}
-  navbar = html.tag 'div', navbar_inner, {'class': 'navbar'}
+  navbar = html.tag 'div', navbar_inner, {'class': 'navbar navbar-static-top'}
   return navbar
 
 css_tags = ()->
@@ -31,8 +31,8 @@ js_tags = ()->
 
   return tags.join ''
 
-breadcrumb = (url)->
-  path = 'root' + url
+breadcrumb = (path)->
+  path = 'root' + path
   is_dir = false
   is_dir = true if path.match(/\/$/)
   path = path.replace(/\/$/, '')
@@ -62,7 +62,9 @@ breadcrumb = (url)->
 
   return html.tag 'ul', lis.join(''), {'class': 'breadcrumb'}
 
+common_parts = (path)->
+  navbar_tags() + breadcrumb(path)
+
 exports.include_js = js_tags()
 exports.include_css = css_tags()
-exports.navbar = navbar_tags()
-exports.breadcrumb = breadcrumb
+exports.common_parts = common_parts

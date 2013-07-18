@@ -48,8 +48,7 @@ exports = module.exports = (root)->
     head_str = html.tag 'head', contents.include_css
 
     body_str = html.tag 'body', [
-      contents.breadcrumb req.path
-      contents.navbar
+      contents.common_parts req.path
       dir_table_tags(files, path)
       contents.include_js
     ].join ''
