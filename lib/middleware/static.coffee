@@ -27,6 +27,9 @@ raw_contents = (res, type, data)->
 
 
 deco_contents = (req, res, data)->
+  data = html.tag 'div', data, {'class': 'span12'}
+  data = html.tag 'div', data, {'class': 'container'}
+
   head = html.tag 'head', contents.include_css
 
   title = html.tag 'h1', req.url
@@ -82,6 +85,4 @@ exports = module.exports = (root)->
       else
         data = html.tag 'pre', html.escape(data)
 
-    data = html.tag('div', data, {'class': 'span12'})
-    data = html.tag('div', data, {'class': 'container'})
     deco_contents(req, res, data)
