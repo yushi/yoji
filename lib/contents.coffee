@@ -29,7 +29,7 @@ navbar_tags = ()->
 css_tags = ()->
   css_files = [
     '/css/style.css'
-    '/css/rainbow_github.css'
+    '/css/pygments.css'
     '/css/bootstrap.min.css'
   ]
   tags = css_files.map (path)->
@@ -40,7 +40,6 @@ css_tags = ()->
 
 js_tags = ()->
   js_files = [
-    '/js/rainbow-custom.min.js'
     '/js/jquery-2.0.2.min.js'
   ]
   tags = js_files.map (path)->

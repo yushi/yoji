@@ -1,6 +1,8 @@
 express = require('express')
 #routes = require('./routes')
 #user = require('./routes/user')
+pygments = require('./lib/pygments')
+fs = require('fs')
 http = require('http')
 path = require('path')
 pwd = process.env.PWD
@@ -31,7 +33,11 @@ if 'development' == app.get('env')
 
 #app.get('/', routes.index)
 #app.get('/users', user.list)
+pygments.css (pygment_css)->
+  fs.writeFileSync(__dirname + '/public/css/pygments.css', pygment_css)
+  start_server()
 
-server = http.createServer(app)
-server.listen app.get('port'), ()->
-  console.log 'Express server listening on port ' + app.get('port')
+start_server = ()->
+  server = http.createServer(app)
+  server.listen app.get('port'), ()->
+    console.log 'Express server listening on port ' + app.get('port')

@@ -4,6 +4,7 @@ html = require '../html'
 contents = require '../contents'
 express = require 'express'
 rst = require('../rst')
+pygments = require('../pygments')
 
 fs_path = (root, path)->
   return root + path
@@ -25,6 +26,21 @@ raw_contents = (res, type, data)->
   res.write data
   res.end()
 
+
+deco_code = (code)->
+  max_line = code.split('\n').length
+  linum_divs = []
+  for i in [1..max_line]
+    linum_divs.push html.tag('span', i, {'class': 'linum'})
+
+  line = html.tag 'td', linum_divs.join('')
+  code = html.tag 'td', code, {'class': 'code'}
+  tags = html.tag 'tr', line + code
+  tags = html.tag 'tbody', tags
+  tags = html.tag 'table', tags, {'class': 'table table-hover'}
+  tags = html.tag 'div', tags, {'class': 'span12'}
+  tags = html.tag 'div', tags, {'class': 'container'}
+  tags
 
 deco_contents = (req, res, data)->
   data = html.tag 'div', data, {'class': 'span12'}
@@ -74,14 +90,10 @@ exports = module.exports = (root)->
         rst.rst_to_html data, (html_data)->
           deco_contents(req, res, html_data)
         return
-      when 'javascript'
-        data = html.escape data
-        data = html.tag 'code', data.toString(), {'data-language': 'javascript'}
-        data = html.tag 'pre', data
-      when 'python'
-        data = html.escape data
-        data = html.tag 'code', data.toString(), {'data-language': 'python'}
-        data = html.tag 'pre', data
+      when 'javascript', 'python'
+        pygments.highlight path, (highlighted)->
+          deco_contents(req, res, deco_code(highlighted))
+        return
       else
         data = html.tag 'pre', html.escape(data)
 

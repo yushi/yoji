@@ -1,3 +1,17 @@
 .highlight {
     background-color: yellow;
 }
+
+.linum {
+    display: block;
+    padding: 0px;
+}
+
+.code {
+    line-height: 0px;
+    border-spacing: 2px;
+}
+
+pre {
+    padding: 0px 5px;
+}
