@@ -7,8 +7,12 @@ css = (cb)->
     css += chunk.toString()
 
   p.on 'close', (code, signal)->
-    console.log code, signal
-    cb(css)
+    err = false
+    if code != 0
+      err = true
+
+    cb(err, css)
+
 
 highlight = (path, cb)->
   p = spawn('pygmentize', ['-f', 'html', path])
@@ -17,9 +21,11 @@ highlight = (path, cb)->
     html += chunk
 
   p.on 'close', (code, signal)->
-    console.log code, signal
-    console.log html
-    cb(html)
+    err = false
+    if code != 0
+      err = true
+
+    cb(err, html)
 
 exports.css = css
 exports.highlight = highlight

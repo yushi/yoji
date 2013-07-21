@@ -33,7 +33,10 @@ if 'development' == app.get('env')
 
 #app.get('/', routes.index)
 #app.get('/users', user.list)
-pygments.css (pygment_css)->
+pygments.css (err, pygment_css)->
+  if err
+    console.error 'pygments error'
+    process.exit(-1)
   fs.writeFileSync(__dirname + '/public/css/pygments.css', pygment_css)
   start_server()
 

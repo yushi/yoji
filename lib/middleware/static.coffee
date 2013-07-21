@@ -90,11 +90,11 @@ exports = module.exports = (root)->
         rst.rst_to_html data, (html_data)->
           deco_contents(req, res, html_data)
         return
-      when 'javascript', 'python'
-        pygments.highlight path, (highlighted)->
+      else
+        pygments.highlight path, (err, highlighted)->
+          if err
+            highlighted = html.tag 'pre', data
           deco_contents(req, res, deco_code(highlighted))
         return
-      else
-        data = html.tag 'pre', html.escape(data)
 
     deco_contents(req, res, data)
