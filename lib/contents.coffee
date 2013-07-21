@@ -41,6 +41,7 @@ css_tags = ()->
 js_tags = ()->
   js_files = [
     '/js/jquery-2.0.2.min.js'
+    '/js/yoji.js'
   ]
   tags = js_files.map (path)->
     return html.js_tag path

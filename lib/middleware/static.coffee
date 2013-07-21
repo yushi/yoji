@@ -28,16 +28,23 @@ raw_contents = (res, type, data)->
 
 
 deco_code = (code)->
-  max_line = code.split('\n').length
+  max_line = code.split('\n').length - 2
   linum_divs = []
   for i in [1..max_line]
-    linum_divs.push html.tag('span', i, {'class': 'linum'})
+    linum_divs.push html.tag('a', i, {
+      'class': 'linum'
+      'href': '#'
+      'id': 'L' + parseInt(i)
+      'onclick': 'javascript:goto_line(this);'
+    })
 
-  line = html.tag 'td', linum_divs.join('')
+  line = html.tag 'pre', linum_divs.join('')
+  line = html.tag 'div', line, {'class': 'linenodiv'}
+  line = html.tag 'td', line, {'class': 'linenos'}
   code = html.tag 'td', code, {'class': 'code'}
   tags = html.tag 'tr', line + code
   tags = html.tag 'tbody', tags
-  tags = html.tag 'table', tags, {'class': 'table table-hover'}
+  tags = html.tag 'table', tags, {'class': 'table'}
   tags = html.tag 'div', tags, {'class': 'span12'}
   tags = html.tag 'div', tags, {'class': 'container'}
   tags

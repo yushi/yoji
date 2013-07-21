@@ -30,7 +30,7 @@ get_table_entries = (path, lines)->
     line = get_highlighted_code line, highlights
     tags += html.tag 'tr', [
       html.tag 'td', path, {'rowspan': Object.keys(lines).length} if tags == ''
-      html.tag 'td', html.tag('a', num, {'href': "#{path}?yoji=preview"})
+      html.tag 'td', html.tag('a', num, {'href': "#{path}?yoji=preview##{num}"})
       html.tag 'td', html.tag('code', line)
     ].join('')
 
