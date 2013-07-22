@@ -14,7 +14,7 @@
 
 .code {
     line-height: 0px;
-    border-spacing: 2px;
+    # border-spacing: 2px;
 }
 
 pre {
@@ -24,4 +24,9 @@ pre {
 div.highlight > pre {
     white-space: pre;
     overflow: scroll;
+    word-wrap: normal;
+}
+
+.nomargin{
+    margin: 0px;
 }

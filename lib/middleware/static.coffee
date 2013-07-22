@@ -41,6 +41,7 @@ deco_code = (code, max_line)->
   line = html.tag 'pre', linum_divs.join(''), {'class': 'linepre'}
   line = html.tag 'div', line, {'class': 'linenodiv'}
   line = html.tag 'td', line, {'class': 'linenos'}
+  code = html.tag 'div', code, {'class': 'span10'}
   code = html.tag 'td', code, {'class': 'code'}
   tags = html.tag 'tr', line + code
   tags = html.tag 'tbody', tags
