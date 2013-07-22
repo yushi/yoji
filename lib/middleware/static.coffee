@@ -31,14 +31,15 @@ deco_code = (code)->
   max_line = code.split('\n').length - 2
   linum_divs = []
   for i in [1..max_line]
-    linum_divs.push html.tag('a', i, {
+    l = html.tag('a', i, {
       'class': 'linum'
       'href': '#'
       'id': 'L' + parseInt(i)
       'onclick': 'javascript:goto_line(this);'
     })
+    linum_divs.push l
 
-  line = html.tag 'pre', linum_divs.join('')
+  line = html.tag 'pre', linum_divs.join(''), {'class': 'linepre'}
   line = html.tag 'div', line, {'class': 'linenodiv'}
   line = html.tag 'td', line, {'class': 'linenos'}
   code = html.tag 'td', code, {'class': 'code'}

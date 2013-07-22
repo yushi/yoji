@@ -2,6 +2,11 @@
     background-color: yellow;
 }
 
+.linepre {
+    width: 40px;
+    text-align: right;
+}
+
 .linum {
     display: block;
     padding: 0px;
