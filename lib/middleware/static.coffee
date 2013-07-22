@@ -27,8 +27,7 @@ raw_contents = (res, type, data)->
   res.end()
 
 
-deco_code = (code)->
-  max_line = code.split('\n').length - 2
+deco_code = (code, max_line)->
   linum_divs = []
   for i in [1..max_line]
     l = html.tag('a', i, {
@@ -99,10 +98,12 @@ exports = module.exports = (root)->
           deco_contents(req, res, html_data)
         return
       else
+        max_line = data.toString().split('\n').length
+        console.log max_line
         pygments.highlight path, (err, highlighted)->
           if err
             highlighted = html.tag 'pre', data
-          deco_contents(req, res, deco_code(highlighted))
+          deco_contents(req, res, deco_code(highlighted, max_line))
         return
 
     deco_contents(req, res, data)

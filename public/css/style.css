@@ -20,3 +20,8 @@
 pre {
     padding: 0px 5px;
 }
+
+div.highlight > pre {
+    white-space: pre;
+    overflow: scroll;
+}
