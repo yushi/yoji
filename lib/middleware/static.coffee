@@ -100,7 +100,6 @@ exports = module.exports = (root)->
         return
       else
         max_line = data.toString().split('\n').length
-        console.log max_line
         pygments.highlight path, (err, highlighted)->
           if err
             highlighted = html.tag 'pre', data

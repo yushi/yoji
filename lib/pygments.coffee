@@ -15,7 +15,13 @@ css = (cb)->
 
 
 highlight = (path, cb)->
-  p = spawn('pygmentize', ['-f', 'html', path])
+  p = spawn('pygmentize',
+    [
+      '-f', 'html'
+      '-O', 'encoding=utf-8'
+      '-O', 'outencoding=utf-8'
+      path
+    ])
   html = ''
   p.stdout.on 'data', (chunk)->
     html += chunk
