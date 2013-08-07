@@ -4,7 +4,6 @@ ag = require '../ag'
 
 
 get_highlighted_code = (str, highlights)->
-  console.log '"' + str + '"', highlights
   parts = []
   idx = 0
   for h in highlights
@@ -12,7 +11,6 @@ get_highlighted_code = (str, highlights)->
     parts.push [str[h[0]..(h[0]+h[1]-1)], 1]
     idx = h[0] + h[1] - 1
   parts.push [str[idx+1..], 0]
-  console.log parts
   parts = parts.map (p)->
     if p[1] == 1
       html.tag 'span', html.escape(p[0]), {'class': 'highlight'}
