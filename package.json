@@ -1,10 +1,12 @@
 {
-  "name": "yoji",
-  "version": "0.0.1",
-  "private": true,
-  "dependencies": {
-    "express": "3.3.4",
-    "jade": "*",
-    "showdown": "*"
-  }
+    "name": "yoji",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "coffee-script": ">=1.6.3 <1.7.0",
+        "optimist": ">=0.6.0 <0.7.0",
+        "express": ">=3.3.4 <3.4.0",
+        "jade": ">=0.33.0 <0.34.0",
+        "showdown": ">=0.3.1 <0.4.0"
+    }
 }
