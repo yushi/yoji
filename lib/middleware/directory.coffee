@@ -48,7 +48,7 @@ dir_table_tags = (files, root)->
   parts = html.tag('div', table, {'class': 'container'})
   return parts
 
-exports = module.exports = (root)->
+exports = module.exports = (root, basepath)->
   return DirectoryMiddleware = (req, res, next)->
     if 'GET' != req.method && 'HEAD' != req.method
       return next()
@@ -63,12 +63,12 @@ exports = module.exports = (root)->
 
     files = fs.readdirSync(path)
 
-    head_str = html.tag 'head', contents.include_css
+    head_str = html.tag 'head', contents.include_css(basepath)
 
     body_str = html.tag 'body', [
-      contents.common_parts req.path
+      contents.common_parts(req.path, basepath)
       dir_table_tags(files, path)
-      contents.include_js
+      contents.include_js(basepath)
     ].join ''
     html_str = html.tag 'html', head_str + body_str
 

@@ -1,7 +1,8 @@
 optimist = require('optimist')
 argv = optimist
-  .usage('Usage: $0 -p [port]')
+  .usage('Usage: $0 -p [port] --basepath [basepath]')
   .default('p', 4011)
+  .default('basepath', '')
   .alias('p', 'port')
   .alias('h', 'help')
   .argv
@@ -33,9 +34,9 @@ app.use(express.methodOverride())
 app.use(app.router)
 static_path = pwd # path.join(__dirname, 'public')
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(require('./lib/middleware/search')(static_path))
-app.use(require('./lib/middleware/directory')(static_path))
-app.use(require('./lib/middleware/static')(static_path))
+app.use(require('./lib/middleware/search')(static_path, argv.basepath))
+app.use(require('./lib/middleware/directory')(static_path, argv.basepath))
+app.use(require('./lib/middleware/static')(static_path, argv.basepath))
 #app.use(express.directory(static_path))
 
 

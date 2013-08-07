@@ -50,19 +50,19 @@ deco_code = (code, max_line)->
   tags = html.tag 'div', tags, {'class': 'container'}
   tags
 
-deco_contents = (req, res, data)->
+deco_contents = (req, res, data, basepath)->
   data = html.tag 'div', data, {'class': 'span12'}
   data = html.tag 'div', data, {'class': 'container'}
 
-  head = html.tag 'head', contents.include_css
+  head = html.tag 'head', contents.include_css(basepath)
 
   title = html.tag 'h1', req.url
   hr = html.tag 'hr'
 
   body = html.tag 'body', [
-    contents.common_parts req.path
+    contents.common_parts(req.path, basepath)
     data
-    contents.include_js
+    contents.include_js(basepath)
   ].join ''
   html_str = html.tag 'html', head + body
   res.setHeader 'Content-Type', 'text/html'
@@ -70,7 +70,7 @@ deco_contents = (req, res, data)->
   res.end()
 
 
-exports = module.exports = (root)->
+exports = module.exports = (root, basepath)->
   return StaticMiddleware = (req, res, next)->
     if 'GET' != req.method && 'HEAD' != req.method
       return next()
@@ -96,14 +96,14 @@ exports = module.exports = (root)->
         data = conv.makeHtml data.toString()
       when 'rst'
         rst.rst_to_html data, (html_data)->
-          deco_contents(req, res, html_data)
+          deco_contents(req, res, html_data, basepath)
         return
       else
         max_line = data.toString().split('\n').length
         pygments.highlight path, (err, highlighted)->
           if err
             highlighted = html.tag 'pre', data
-          deco_contents(req, res, deco_code(highlighted, max_line))
+          deco_contents(req, res, deco_code(highlighted, max_line), basepath)
         return
 
-    deco_contents(req, res, data)
+    deco_contents(req, res, data, basepath)

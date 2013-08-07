@@ -1,12 +1,15 @@
 html = require './html'
 
 
-navbar_tags = ()->
+rpath = (path, basepath)->
+  "#{basepath}#{path}"
+
+navbar_tags = (basepath)->
   #lis = [].map (e)->
   #  a = html.tag 'a', e, {'href': '#'}
   #  html.tag 'li', a
 
-  nav = html.tag 'a', 'Yoji', {'class': 'brand', 'href': '/'}
+  nav = html.tag 'a', 'Yoji', {'class': 'brand', 'href': rpath('/', basepath)}
   nav_input = html.tag 'input',
     '',
     {
@@ -26,11 +29,11 @@ navbar_tags = ()->
   return navbar
 
 
-css_tags = ()->
+css_tags = (basepath)->
   css_files = [
-    '/css/style.css'
-    '/css/pygments.css'
-    '/css/bootstrap.min.css'
+    rpath('/css/style.css', basepath)
+    rpath('/css/pygments.css', basepath)
+    rpath('/css/bootstrap.min.css', basepath)
   ]
   tags = css_files.map (path)->
     return html.css_tag path
@@ -38,10 +41,10 @@ css_tags = ()->
   return tags.join ''
 
 
-js_tags = ()->
+js_tags = (basepath)->
   js_files = [
-    '/js/jquery-2.0.2.min.js'
-    '/js/yoji.js'
+    rpath('/js/jquery-2.0.2.min.js', basepath)
+    rpath('/js/yoji.js', basepath)
   ]
   tags = js_files.map (path)->
     return html.js_tag path
@@ -49,7 +52,7 @@ js_tags = ()->
   return tags.join ''
 
 
-breadcrumb = (path)->
+breadcrumb = (path, basepath)->
   path = 'root' + path
   is_dir = false
   is_dir = true if path.match(/\/$/)
@@ -64,12 +67,13 @@ breadcrumb = (path)->
   for name, i in names
     if i == 0
       lis.push html.tag 'li', [
-        html.tag 'a', name, {'href':'/'}
+        html.tag 'a', name, {'href':rpath('/', basepath)}
         slash
       ].join ''
     else
       lis.push html.tag 'li', [
-        html.tag 'a', name, {'href':"/#{names[1..i].join('/')}/"}
+        html.tag 'a', name,
+          {'href':rpath("/#{names[1..i].join('/')}/", basepath)}
         slash
       ].join ''
 
@@ -81,9 +85,9 @@ breadcrumb = (path)->
   return html.tag 'ul', lis.join(''), {'class': 'breadcrumb'}
 
 
-common_parts = (path)->
-  navbar_tags() + breadcrumb(path)
+common_parts = (path, basepath)->
+  navbar_tags(basepath) + breadcrumb(path, basepath)
 
-exports.include_js = js_tags()
-exports.include_css = css_tags()
+exports.include_js = js_tags
+exports.include_css = css_tags
 exports.common_parts = common_parts
