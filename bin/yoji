@@ -1,3 +1,5 @@
+#!/usr/bin/env coffee
+
 optimist = require('optimist')
 argv = optimist
   .usage('Usage: $0 -p [port] --basepath [basepath]')
@@ -14,7 +16,7 @@ if argv.h
 express = require('express')
 #routes = require('./routes')
 #user = require('./routes/user')
-pygments = require('./lib/pygments')
+pygments = require('../lib/pygments')
 fs = require('fs')
 http = require('http')
 path = require('path')
@@ -33,10 +35,10 @@ app.use(express.bodyParser())
 app.use(express.methodOverride())
 app.use(app.router)
 static_path = pwd # path.join(__dirname, 'public')
-app.use(express.static(path.join(__dirname, 'public')))
-app.use(require('./lib/middleware/search')(static_path, argv.basepath))
-app.use(require('./lib/middleware/directory')(static_path, argv.basepath))
-app.use(require('./lib/middleware/static')(static_path, argv.basepath))
+app.use(express.static(path.join(__dirname, '../public')))
+app.use(require('../lib/middleware/search')(static_path, argv.basepath))
+app.use(require('../lib/middleware/directory')(static_path, argv.basepath))
+app.use(require('../lib/middleware/static')(static_path, argv.basepath))
 #app.use(express.directory(static_path))
 
 
@@ -50,7 +52,7 @@ pygments.css (err, pygment_css)->
   if err
     console.error 'pygments error'
     process.exit(-1)
-  fs.writeFileSync(__dirname + '/public/css/pygments.css', pygment_css)
+  fs.writeFileSync(__dirname + '/../public/css/pygments.css', pygment_css)
   start_server()
 
 start_server = ()->
