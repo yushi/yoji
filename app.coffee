@@ -1,3 +1,15 @@
+optimist = require('optimist')
+argv = optimist
+  .usage('Usage: $0 -p [port]')
+  .default('p', 4011)
+  .alias('p', 'port')
+  .alias('h', 'help')
+  .argv
+
+if argv.h
+  optimist.showHelp()
+  process.exit -1
+
 express = require('express')
 #routes = require('./routes')
 #user = require('./routes/user')
@@ -11,7 +23,7 @@ app = express()
 
 express.mime.default_type = 'text/plain'
 
-app.set('port', process.env.PORT || 4011)
+app.set('port', process.env.PORT || argv.port)
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
 #app.use(express.favicon())
